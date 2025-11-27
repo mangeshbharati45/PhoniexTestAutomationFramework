@@ -28,6 +28,7 @@ public class LoginAPITest {
 		.contentType(JSON)
 		.accept(ANY)
 		.body(userCredentials)
+		.log().method()
 		.log().all()
 	.when()
 		.post("login")
