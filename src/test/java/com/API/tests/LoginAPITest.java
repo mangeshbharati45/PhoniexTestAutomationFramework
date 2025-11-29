@@ -22,9 +22,9 @@ public class LoginAPITest {
 		
 		UserCredentials userCredentials = new UserCredentials("iamfd", "password");
 		
-		given()
+	given()
 		.baseUri(getProperty("BASE_URI"))
-	.and()
+		.and()
 		.contentType(JSON)
 		.accept(ANY)
 		.body(userCredentials)
@@ -35,7 +35,7 @@ public class LoginAPITest {
 	.then()
 		.statusCode(200)
 		.body("message", equalTo("Success"))
-	.and()
+		.and()
 		.body("data.token", notNullValue())
 		.body(matchesJsonSchemaInClasspath("response-Schema/loginAPIResponseSchema.json"))
 		.log().all();
