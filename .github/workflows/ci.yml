@@ -5,7 +5,25 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  # schedule: # Set the CRON for MIDNIGHT IST ---- UTC
+  #   - cron: "30 18 * * *"
+  #   - cron: "30 17 * * *"
+  #   - cron: "30 16 * * *"
 
+  workflow_dispatch: 
+    inputs:
+      env:
+        description: "Environment"
+        type: choice
+        options: [qa,uat,dev]
+        default: qa
+        required: true
+      suiteXmlFile:
+        description: "TestNG Xml File"
+        type: choice
+        options: [testng.xml,smoke.xml,regression.xml,testng-datadriven.xml]
+        default: testng.xml
+        required: true
 jobs:
   test:
 
@@ -20,7 +38,20 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Execute Test Automation Framework
-      run: mvn clean test -DsuiteXmlFile=testng.xml -Denv=qa
+      run: mvn clean test -DsuiteXmlFile="${{ steps.default.outputs.suiteXmlFile }}" -Denv="${{ steps.default.outputs.env }}"
+    
+    - name: Upload a Build Artifact
+      if: always()
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: SureFire Report
+        path: target/surefire-reports/
+        retention-days: 10
+
+      
+
+  
+
 
     - name: Upload a Build Artifact
       if: always()
