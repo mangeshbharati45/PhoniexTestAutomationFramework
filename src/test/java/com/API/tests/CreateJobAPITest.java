@@ -12,7 +12,14 @@ import java.util.List;
 
 import org.testng.annotations.Test;
 
+import com.API.constants.Model;
+import com.API.constants.OEM;
+import com.API.constants.Platform;
+import com.API.constants.Problem;
+import com.API.constants.Product;
 import com.API.constants.Roles;
+import com.API.constants.ServiceLocation;
+import com.API.constants.Warranty_Status;
 import com.API.pojo.CreateJobPayload;
 import com.API.pojo.Customer;
 import com.API.pojo.CustomerAddress;
@@ -29,12 +36,15 @@ public class CreateJobAPITest {
 		// Creating the CreateJobPayload Object
 
 		Customer customer = new Customer("Mangesh", "Bharati", "7028234345","", "sampleemail123@gmail.com","");
-		CustomerAddress customerAddress = new CustomerAddress("D 404", "Vasant Galaxy", "Bangur Nagar","Inorbit","Mumbai","411039","India", "Maharashtra");
-		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "23187831553552", "23187831553552", "23187831553552", getTimeWithDaysAgo(10), 1, 1);
-		Problems problems = new Problems(1, "Battery Issue");
+		CustomerAddress customerAddress = new CustomerAddress("D 404", "Vasant Galaxy", "Bangur Nagar", "Inorbit","Mumbai", "411039", "India", "Maharashtra");
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "23187831553553", "23187831553553", "23187831553553", getTimeWithDaysAgo(10), 
+				Product.NEXUS_2.getCode(), Model.NEXUS_2_BLUE.getCode());
+		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOW.getCode(), "Battery Issue");
+		
 		List<Problems> problemList = new ArrayList<Problems>();
 		problemList.add(problems);
-		CreateJobPayload createJobPayload = new CreateJobPayload(0, 2, 1, 1, customer, customerAddress, customerProduct, problemList);
+		
+		CreateJobPayload createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platform.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer, customerAddress, customerProduct, problemList);
 		
 		given()
 			.spec(SpecUtil.requestSpecWithAuth(Roles.FD, createJobPayload))
