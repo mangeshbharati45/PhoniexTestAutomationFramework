@@ -5,8 +5,10 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import org.testng.annotations.Test;
 
@@ -16,6 +18,7 @@ import com.API.pojo.Customer;
 import com.API.pojo.CustomerAddress;
 import com.API.pojo.CustomerProduct;
 import com.API.pojo.Problems;
+import static com.API.utils.DateTimeUtil.*;
 import com.API.utils.SpecUtil;
 
 public class CreateJobAPITest {
@@ -24,10 +27,10 @@ public class CreateJobAPITest {
 	public void createJobAPITest() {
 		
 		// Creating the CreateJobPayload Object
-		
+
 		Customer customer = new Customer("Mangesh", "Bharati", "7028234345","", "sampleemail123@gmail.com","");
 		CustomerAddress customerAddress = new CustomerAddress("D 404", "Vasant Galaxy", "Bangur Nagar","Inorbit","Mumbai","411039","India", "Maharashtra");
-		CustomerProduct customerProduct = new CustomerProduct("2025-04-06T18:30:00.000Z", "23187831553551", "23187831553551", "23187831553551", "2025-04-06T18:30:00.000Z", 1, 1);
+		CustomerProduct customerProduct = new CustomerProduct(getTimeWithDaysAgo(10), "23187831553552", "23187831553552", "23187831553552", getTimeWithDaysAgo(10), 1, 1);
 		Problems problems = new Problems(1, "Battery Issue");
 		List<Problems> problemList = new ArrayList<Problems>();
 		problemList.add(problems);
