@@ -5,7 +5,6 @@ import static com.API.utils.ConfigManager.getProperty;
 import org.hamcrest.Matchers;
 
 import com.API.constants.Roles;
-import com.API.pojo.UserCredentials;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
